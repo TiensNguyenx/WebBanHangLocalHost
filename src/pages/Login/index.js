@@ -49,7 +49,7 @@ function Login() {
             toast.error('Vui lòng nhập đầy đủ thông tin')
             return
         }
-        const hashPassword = await bcrypt.hash(password, 10);
+        const hashPassword = await bcrypt.hashSync(password, 10);
         console.log(hashPassword)
         setLoadingApi(true);
         fetch('http://localhost:3002/api/user/sign-in', {

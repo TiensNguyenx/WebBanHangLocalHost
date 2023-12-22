@@ -39,7 +39,7 @@ function Register() {
     })
 
     const handleRegister = async (event) => {
-        const hashPassword = await bcrypt.hash(password, 10);
+        const hashPassword = await bcrypt.hashSync(password, 10);
 
         try {
             fetch('http://localhost:3002/api/user/sign-up', {
@@ -78,9 +78,7 @@ function Register() {
                                         localStorage.setItem('token', data.access_token)
 
                                         loginContext(data.access_token);
-
                                     }
-
                                 })
                         }, 1000)
                     }
