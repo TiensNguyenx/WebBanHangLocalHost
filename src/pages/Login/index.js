@@ -43,13 +43,14 @@ function Login() {
 
         setEmail(event.target.value);
     };
-    function handleLogin(event) {
+    const handleLogin = async (event) => {
 
         if (!email || !password) {
             toast.error('Vui lòng nhập đầy đủ thông tin')
             return
         }
-        const hashPassword = bcrypt.hash(password, 10);
+        const hashPassword = await bcrypt.hash(password, 10);
+        console.log(hashPassword)
         setLoadingApi(true);
         fetch('http://localhost:3002/api/user/sign-in', {
             method: 'POST',
@@ -113,7 +114,7 @@ function Login() {
                             <label><input type='checkbox' />Lưu mật khẩu</label>
                             <div> <Link to='/forgotpassword'> Quên mật khẩu</Link></div>
                         </div>
-                        <button style={{ marginTop: '20px' }} type='submit' className={cx('btn', email && password && !error ? 'active' : '')}
+                        <button style={{ marginTop: '20px' }} type='button' className={cx('btn', email && password && !error ? 'active' : '')}
                             disabled={email && password && !error ? false : true} onClick={handleLogin}>
                             {loadingApi && <AiOutlineLoading3Quarters icon="spinner" className={cx('spinner')} />}
                             &nbsp; Đăng Nhập</button>
