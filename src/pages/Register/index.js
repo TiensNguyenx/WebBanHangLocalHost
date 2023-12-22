@@ -38,16 +38,16 @@ function Register() {
         }
     })
 
-    function handleRegister(event) {
-        const hashPassword = bcrypt.hash(password, 10);
-        const hashConfirmPassword = bcrypt.hash(confirmPassword, 10);
+    const handleRegister = async (event) => {
+        const hashPassword = await bcrypt.hash(password, 10);
+
         try {
             fetch('http://localhost:3002/api/user/sign-up', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, email, password: hashPassword, confirmPassword: hashConfirmPassword, phone }),
+                body: JSON.stringify({ name, email, password: hashPassword, phone }),
             })
                 .then((res) => {
                     return res.json()
@@ -172,7 +172,7 @@ function Register() {
 
                         </div>
 
-                        <button type='submit' className={cx('btn', email && password ? 'active' : '')} disabled={email && name && phone && password && confirmPassword && !errorEmail && !errorPhone && !errorConfirmPassword ? false : true} onClick={handleRegister}>Đăng ký</button>
+                        <button type='button' className={cx('btn', email && password ? 'active' : '')} disabled={email && name && phone && password && confirmPassword && !errorEmail && !errorPhone && !errorConfirmPassword ? false : true} onClick={handleRegister}>Đăng ký</button>
                         <div className={cx('register-link')}>
                             <p style={{ marginRight: '5px', cursor: 'pointer' }}>Đã có tài khoản?
                             </p>
