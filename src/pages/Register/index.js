@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import 'react-phone-number-input/style.css'
 import { useContext } from 'react';
 import { UserContext } from '~/context/UserContext';
-import bcrypt from 'bcryptjs';
+
 const cx = classNames.bind(styles)
 
 
@@ -39,7 +39,7 @@ function Register() {
     })
 
     const handleRegister = async (event) => {
-        const hashPassword = await bcrypt.hashSync(password, 10);
+     
 
         try {
             fetch('http://localhost:3002/api/user/sign-up', {
@@ -47,7 +47,7 @@ function Register() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, email, password: hashPassword, phone }),
+                body: JSON.stringify({ name, email, password, phone }),
             })
                 .then((res) => {
                     return res.json()

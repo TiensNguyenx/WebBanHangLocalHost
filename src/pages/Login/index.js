@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useEffect, useContext } from 'react';
 import { UserContext } from '~/context/UserContext';
-import bcrypt from 'bcryptjs';
 
 const cx = classNames.bind(styles)
 
@@ -49,19 +48,17 @@ function Login() {
             toast.error('Vui lòng nhập đầy đủ thông tin')
             return
         }
-        const hashPassword = await bcrypt.hashSync(password, 10);
-        console.log(hashPassword)
+      
         setLoadingApi(true);
         fetch('http://localhost:3002/api/user/sign-in', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password: hashPassword }),
+            body: JSON.stringify({ email, password }),
         })
             .then((res) => {
                 if (res.status === 200) {
-
                     return res.json()
                 }
             }
@@ -73,7 +70,6 @@ function Login() {
 
                     loginContext(data.access_token);
                     setTimeout(() => {
-
                         toast.success('Đăng nhập thành công');
                         setLoadingApi(false);
                         navigate("/");
