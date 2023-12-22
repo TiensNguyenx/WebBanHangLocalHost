@@ -24,7 +24,7 @@ function Login() {
     const [loadingApi, setLoadingApi] = useState(false);
     const navigate = useNavigate();
     const { loginContext, user, } = useContext(UserContext);
-    
+
     useEffect(() => {
 
         if (user.id) {
@@ -49,14 +49,14 @@ function Login() {
             toast.error('Vui lòng nhập đầy đủ thông tin')
             return
         }
-        const hashPassword =  bcrypt.hash(password, 10);
+        const hashPassword = bcrypt.hash(password, 10);
         setLoadingApi(true);
         fetch('http://localhost:3002/api/user/sign-in', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, hashPassword }),
+            body: JSON.stringify({ email, password: hashPassword }),
         })
             .then((res) => {
                 if (res.status === 200) {
