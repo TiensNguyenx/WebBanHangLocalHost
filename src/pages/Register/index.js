@@ -39,7 +39,7 @@ function Register() {
     })
 
     const handleRegister = async (event) => {
-     
+
 
         try {
             fetch('http://localhost:3002/api/user/sign-up', {
@@ -47,7 +47,7 @@ function Register() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, email, password, phone }),
+                body: JSON.stringify({ name, email, password, confirmPassword, phone }),
             })
                 .then((res) => {
                     return res.json()
