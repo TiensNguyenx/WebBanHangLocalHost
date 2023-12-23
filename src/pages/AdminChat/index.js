@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import styles from "./Chat.module.scss";
+import styles from "./AdminChat.module.scss";
 import { useState } from "react";
 
 import { AiOutlinePicture } from "react-icons/ai";
@@ -15,8 +15,8 @@ import logoShop from "../../assets/images/logoShop.png";
 
 const cx = classNames.bind(styles);
 
-function Chat() {
- 
+function AdminChat() {
+
     const [message, setMessage] = useState('');
     const handleTypeMessage = (e) => {
         setMessage(e.target.value);
@@ -29,8 +29,20 @@ function Chat() {
                         <div className={cx('sidebar-header')}>
                             Chats
                         </div>
-                      
-                      
+                        <div className={cx('sidebar-search')}>
+                            <input type="text" placeholder="Search contact / chat" />
+                        </div>
+                        <div className={cx('user-wrapper')}>
+                            <div className={cx('user-containner')}>
+                                <img className={cx('user-img')} src="https://connectme-html.themeyn.com/images/avatar/1.jpg" alt=""></img>
+                                <div className={cx('user-info')}>
+                                    <div className={cx('user-name')}>Huynh Tien</div>
+                                    <div className={cx('user-mess')}>Hello</div>
+                                </div>
+                            </div>
+
+
+                        </div>
                     </div>
                     <div className={cx('chat-space')}>
                         <div className={cx('option')}>
@@ -70,6 +82,7 @@ function Chat() {
             <Footer />
         </div>
     );
+
 }
 
-export default Chat;
+export default AdminChat;

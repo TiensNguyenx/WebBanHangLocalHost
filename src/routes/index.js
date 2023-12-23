@@ -15,6 +15,8 @@ import ForgotPassword from "~/pages/ForgotPassword";
 import ResetPassword from "~/pages/ResetPassword";
 import SeeAllProduct from "~/pages/SeeAllProduct";
 import Chat from "~/pages/Chat";
+import Admin from "~/pages/Admin";
+import AdminChat from "~/pages/AdminChat";
 import DefalutInformation from "~/components/Layout/components/DefaultInformation";
 const publicRoutes = [
     {
@@ -105,6 +107,16 @@ const publicRoutes = [
     {
         path: '/chat',
         component: Chat,
+        layout: HeaderOnly
+    },
+    {
+        path: '/admin',
+        component: Admin,
+        layout: HeaderOnly
+    },
+    {
+        path: '/admin/chat',
+        component: AdminChat,
         layout: HeaderOnly
     },
 

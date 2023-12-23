@@ -36,6 +36,7 @@ const UserProvider = ({ children }) => {
                                 name: data.data.name,
                                 id: data.data._id,
                                 phone: data.data.phone,
+                                isAdmin: data.data.isAdmin,
                                 isAuthEmail: data.data.isAuth
                             }));
 

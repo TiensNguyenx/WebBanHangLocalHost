@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useEffect, useContext } from 'react';
 import { UserContext } from '~/context/UserContext';
-
+import { jwtDecode } from "jwt-decode";
 const cx = classNames.bind(styles)
 
 
@@ -48,7 +48,7 @@ function Login() {
             toast.error('Vui lòng nhập đầy đủ thông tin')
             return
         }
-      
+
         setLoadingApi(true);
         fetch('http://localhost:3002/api/user/sign-in', {
             method: 'POST',
@@ -69,11 +69,42 @@ function Login() {
                     localStorage.setItem('token', data.access_token)
 
                     loginContext(data.access_token);
-                    setTimeout(() => {
-                        toast.success('Đăng nhập thành công');
-                        setLoadingApi(false);
-                        navigate("/");
-                    }, 1000)
+         
+
+                    if (data.access_token) {
+                        const decoded = jwtDecode(data.access_token);
+                        if (decoded.payload?.id) {
+                            fetch(`http://localhost:3002/api/user/get-detail/${decoded.payload.id}`, {
+                                headers: {
+                                    token: `Beare ${data.access_token}`
+                                },
+
+                            })
+                                .then((res) => {
+                                    if (res.status === 200) {
+                                        return res.json()
+                                    }
+                                }
+
+                                )
+                                .then((data) => {
+
+                                    if (data.data.isAdmin) {
+                                        navigate('/admin')
+                                        toast.success('Đăng nhập thành công');
+                                        setLoadingApi(false);
+                                    }
+                                    else {
+                                        navigate('/')
+                                            toast.success('Đăng nhập thành công');
+                                            setLoadingApi(false);
+                                    }
+
+                                })
+                        }
+                    }
+
+               
                 }
                 else {
                     setTimeout(() => {
