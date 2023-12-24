@@ -60,10 +60,11 @@ function Home() {
     const handleSeeAll = (category) => {
         navigate(`/product?type=${category}`)
     }
+
     return (
         <div className={cx('wrapper')}>
 
-
+           
             <div id="logitech" className={cx('titleProduct')}>BÀN PHÍM LOGITECH</div>
             <div className={cx('container')} >
                 <div className={cx('header')} onClick={() => handleSeeAll('logitech')}>Xem tất cả <FaAngleDoubleRight style={{ color: '#a22327' }} /></div>

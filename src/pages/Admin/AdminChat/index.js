@@ -10,13 +10,22 @@ import { MdOutlineAddReaction } from "react-icons/md";
 import { CiMicrophoneOn } from "react-icons/ci";
 import { FaLocationArrow } from "react-icons/fa6";
 import Footer from "~/components/Layout/components/Footer";
-import logoShop from "../../assets/images/logoShop.png";
-
+import logoShop from "../../../assets/images/logoShop.png";
+import { useEffect } from "react";
+import { useContext } from "react";
+import { UserContext } from "~/context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 function AdminChat() {
-
+    const navigate = useNavigate();
+    const { user } = useContext(UserContext);
+    useEffect(() => {
+        if (!localStorage.getItem('isAdmin')) {
+            navigate('/')
+        }
+    }, [])
     const [message, setMessage] = useState('');
     const handleTypeMessage = (e) => {
         setMessage(e.target.value);

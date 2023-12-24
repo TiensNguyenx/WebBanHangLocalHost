@@ -69,7 +69,7 @@ function Login() {
                     localStorage.setItem('token', data.access_token)
 
                     loginContext(data.access_token);
-         
+
 
                     if (data.access_token) {
                         const decoded = jwtDecode(data.access_token);
@@ -96,15 +96,15 @@ function Login() {
                                     }
                                     else {
                                         navigate('/')
-                                            toast.success('Đăng nhập thành công');
-                                            setLoadingApi(false);
+                                        toast.success('Đăng nhập thành công');
+                                        setLoadingApi(false);
                                     }
 
                                 })
                         }
                     }
 
-               
+
                 }
                 else {
                     setTimeout(() => {

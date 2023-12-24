@@ -15,9 +15,19 @@ import ForgotPassword from "~/pages/ForgotPassword";
 import ResetPassword from "~/pages/ResetPassword";
 import SeeAllProduct from "~/pages/SeeAllProduct";
 import Chat from "~/pages/Chat";
-import Admin from "~/pages/Admin";
-import AdminChat from "~/pages/AdminChat";
+import HomeUser from "~/pages/Admin/HomeUser";
+import HomeCoupons from "~/pages/Admin/HomeCoupons";
+import CreateProduct from "~/pages/Admin/CreateProduct";
+import CreateCoupons from "~/pages/Admin/CreateCoupons";
+import HomeOrder from "~/pages/Admin/HomeOrder";
+import HomePayment from "~/pages/Admin/HomePayment";
+import HomeOrderManagement from "~/pages/Admin/HomeOrderManagement";
+
+import AdminChat from "~/pages/Admin/AdminChat";
 import DefalutInformation from "~/components/Layout/components/DefaultInformation";
+import { Fragment } from "react";
+import CreateUser from "~/pages/Admin/CreateUser";
+import HomeProduct from "~/pages/Admin/HomeProduct";
 const publicRoutes = [
     {
         path: '/',
@@ -111,14 +121,93 @@ const publicRoutes = [
     },
     {
         path: '/admin',
-        component: Admin,
-        layout: HeaderOnly
+        component: HomeUser,
+        layout: Fragment
+
+    },
+    {
+        path: '/admin/coupons',
+        component: HomeCoupons,
+        layout: Fragment
+
+    },
+    {
+        path: '/admin/createproduct',
+        component: CreateProduct,
+        layout: Fragment
+
+    },
+    {
+        path: '/admin/createcoupons',
+        component: CreateCoupons,
+        layout: Fragment
+    },
+    {
+        path: '/admin/createuser',
+        component: CreateUser,
+        layout: Fragment
+    },
+    {
+        path: '/admin/order',
+        component: HomeOrder,
+        layout: Fragment
+    },
+    {
+        path: '/admin/ordermanagement',
+        component: HomeOrderManagement,
+        layout: Fragment
+    },
+    {
+        path: '/admin/payment',
+        component: HomePayment,
+        layout: Fragment
+    },
+    {
+        path: '/admin',
+        component: HomeUser,
+        layout: Fragment
+
+    },
+    {
+        path: '/admin/coupons',
+        component: HomeCoupons,
+        layout: Fragment
+
+    },
+    {
+        path: '/admin/createproduct',
+        component: CreateProduct,
+        layout: Fragment
+    },
+    {
+        path: '/admin/createcoupons',
+        component: CreateCoupons,
+        layout: Fragment
+
+    },
+
+    {
+        path: '/admin/payment',
+        component: HomePayment,
+        layout: Fragment
+
+    },
+    {
+        path: '/admin/product',
+        component: HomeProduct,
+        layout: Fragment
+
+    },
+    {
+        path: '/admin/user',
+        component: HomeUser,
+        layout: Fragment
     },
     {
         path: '/admin/chat',
         component: AdminChat,
-        layout: HeaderOnly
-    },
+        layout: Fragment
+    }
 
 ]
 const privateRoutes = [

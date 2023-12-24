@@ -42,6 +42,7 @@ const UserProvider = ({ children }) => {
 
 
                             localStorage.setItem('userId', data.data._id)
+                            localStorage.setItem('isAdmin', data.data.isAdmin)
                         }
                     })
             }
@@ -78,6 +79,7 @@ const UserProvider = ({ children }) => {
         localStorage.removeItem('token');
         localStorage.removeItem('idPayment');
         localStorage.removeItem('userId');
+        localStorage.removeItem('isAdmin');
         setUser((user) => ({
             email: '',
             auth: false,
