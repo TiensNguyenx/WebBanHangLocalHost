@@ -35,3 +35,6 @@ export const getProductByNameService = (name) => {
 export const getAllProductService = (page, limit) => {
     return request.get(`product/get-all?page=${page}&limit=${limit}`)
 }
+export const handleSortService = (page, limit, sortBy, sortType) => {
+    return request.get(`product/get-all?page=${page}&limit=${limit}&sort=${sortType}&sort=${sortBy}`)
+}

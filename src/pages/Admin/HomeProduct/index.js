@@ -1,6 +1,6 @@
 import HeaderAdmin from "~/components/Layout/components/HeaderAdmin";
 import Form from 'react-bootstrap/Form';
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -9,11 +9,14 @@ import classNames from 'classnames/bind';
 import Container from 'react-bootstrap/Container';
 import { getAllProductService, getProductByNameService } from "~/Services/ProductServices";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "~/context/UserContext";
+import { handleSortService } from '~/Services/ProductServices'
+
 const cx = classNames.bind(styles);
 function HomeProduct() {
     const navigate = useNavigate();
-    const { user } = useContext(UserContext);
+    const [sortType, setSortType] = useState('');
+    const [sortBy, setSortBy] = useState('');
+
     useEffect(() => {
         if (!localStorage.getItem('isAdmin')) {
             navigate('/')
@@ -32,8 +35,37 @@ function HomeProduct() {
     const handleSearch = async () => {
         const res = await getProductByNameService(search);
         setProduct(res.data.data);
+        setSearch('');
     }
+    const handleChange = (e) => {
+        if (e.target.value === 'Tên A-Z') {
+            setSortBy('name');
+            setSortType('asc');
+        } else if (e.target.value === 'Tên Z-A') {
+            setSortBy('name');
+            setSortType('desc');
+        }
+        else if (e.target.value === 'Giá tăng dần') {
+            setSortBy('new_price');
+            setSortType('asc');
+        } else if (e.target.value === 'Giá giảm dần') {
+            setSortBy('new_price');
+            setSortType('desc');
+        } else if (e.target.value === 'Mới nhất') {
+            setSortBy('createdAt');
 
+        }
+    }
+    const handleSortProduct = async () => {
+        if (sortBy === 'createdAt') {
+            getAllProductService(0, 100).then((res) => {
+                setProduct(res.data.data);
+            });
+        } else {
+            const rest = await handleSortService(0, 100, sortBy, sortType);
+            setProduct(rest.data.data);
+        }
+    }
     return (
         <div className={cx('containner')}>
             <HeaderAdmin />
@@ -44,7 +76,7 @@ function HomeProduct() {
                             Tên sản phẩm
                         </Form.Label>
                         <Col sm="8">
-                            <Form.Control type="text" placeholder=" Tên sản phẩm" size="lg" onChange={(e) => handleTypeSearch(e)} />
+                            <Form.Control type="text" placeholder=" Tên sản phẩm" size="lg" value={search} onChange={(e) => handleTypeSearch(e)} />
 
                         </Col>
                         <Col sm="2" >
@@ -56,8 +88,8 @@ function HomeProduct() {
                             Sắp xếp theo
                         </Form.Label>
                         <Col sm="8">
-                            <Form.Select size="lg">
-                                <option>Tên A-Z</option>
+                            <Form.Select size="lg" onChange={(e) => handleChange(e)}>
+                                <option >Tên A-Z</option>
                                 <option>Tên Z-A</option>
                                 <option>Mới nhất</option>
                                 <option>Cũ nhất</option>
@@ -74,7 +106,7 @@ function HomeProduct() {
 
                         </Col>
                         <Col sm="2" >
-                            <Button variant="success" size="lg" onClick={handleSearch}>Sắp xếp</Button>{' '}
+                            <Button variant="success" size="lg" onClick={handleSortProduct}>Sắp xếp</Button>{' '}
                         </Col>
                     </Form.Group>
                 </Form>
@@ -83,29 +115,29 @@ function HomeProduct() {
             <div className={cx('product-containner')}>
                 <Container style={{ maxWidth: '100%' }}>
                     <Row>
-                        <Col>ID</Col>
-                        <Col style={{ textAlign: 'center' }}>Ảnh</Col>
-                        <Col>Tên</Col>
-                        <Col style={{ marginLeft: '30px' }}>Giá mới</Col>
-                        <Col>Giá cũ</Col>
-                        <Col>Loại</Col>
-                        <Col>Còn lại</Col>
-                        <Col>Đã bán</Col>
+                        <Col className={cx('center-text')}>ID</Col>
+                        <Col className={cx('center-text')}>Ảnh</Col>
+                        <Col className={cx('center-text')}>Tên</Col>
+                        <Col className={cx('center-text')}>Giá mới</Col>
+                        <Col className={cx('center-text')}>Giá cũ</Col>
+                        <Col className={cx('center-text')}>Loại</Col>
+                        <Col className={cx('center-text')}>Còn lại</Col>
+                        <Col className={cx('center-text')}>Đã bán</Col>
                         <Col>Actions</Col>
                     </Row>
                     {product.map((item, index) => {
                         return (
                             <Row key={index} style={{ border: '1px solid #ccc' }}>
 
-                                <Col style={{ width: '100px', fontSize: '1.3rem', margin: 'auto' }} >{item._id}</Col>
+                                <Col style={{ fontSize: '1.3rem', margin: 'auto' }} >{item._id}</Col>
                                 <Col ><img alt='' className={cx('img')} src={item.image}></img></Col>
 
-                                <Col>{item.name}</Col>
-                                <Col style={{ marginLeft: '30px' }}>{item.new_price}</Col>
-                                <Col>{item.old_price}</Col>
-                                <Col>{item.type}</Col>
-                                <Col>{item.countInStock}</Col>
-                                <Col>{item.sold}</Col>
+                                <Col className={cx('center-text')}>{item.name}</Col>
+                                <Col className={cx('center-text')} >{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.new_price)}</Col>
+                                <Col className={cx('center-text')}>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.old_price)}</Col>
+                                <Col className={cx('center-text')}>{item.type}</Col>
+                                <Col className={cx('center-text')}>{item.countInStock}</Col>
+                                <Col className={cx('center-text')}>{item.sold}</Col>
                                 <Col style={{ marginTop: '5px' }}>
                                     <Row> <Button variant="success" size="lg" style={{ width: '100px', marginBottom: '10px' }}>Sửa</Button>{' '}</Row>
                                     <Row><Button variant="danger" size="lg" style={{ width: '100px', marginBottom: '10px' }}>Xóa</Button>{' '}</Row>

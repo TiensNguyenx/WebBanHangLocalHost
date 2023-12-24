@@ -6,6 +6,7 @@ import Footer from "~/components/Layout/components/Footer";
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 import { getProductByNameService, getAllProductService } from "~/Services/ProductServices";
 import Product from '~/components/Layout/components/Product'
+
 import './pagination.css'
 const cx = classNames.bind(styles)
 function SeeAllProduct() {
@@ -74,6 +75,7 @@ function SeeAllProduct() {
             setLableProduct('TẤT CẢ SẢN PHẨM')
         }
     }
+    
     useEffect(() => {
         renderProduct()
     }, [page])
